@@ -10,55 +10,27 @@ use Illuminate\Support\Facades\File;
 
 class CrudGeneratorCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'crud:generator
     {name : Class (singular) for example User} {--fields=*}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Create crud operations';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $name = $this->argument('name');
         //$fields = $this->option('fields');
         $fields = $this->option('fields');
-
         $this->controller($name);
         $this->model($name, $fields);
-        $this->request($name);
-        //'App\Http\Controllers\{$name}Controller::class'
-        $nameController = $name . "Controller";
-        //File::append(base_path('routes/api.php'), "\n Route::resource('".Str::plural(strtolower($name))."'".str_replace(".","",",App\Http\Controllers\.$nameController.::class);"));
+        $this->request($name);        
+        $nameController = $name . "Controller";        
         File::append(base_path('routes/api.php'), "\n \n Route::apiResource('" . Str::plural(strtolower($name)) . "'" . str_replace(".", "", ",App\Http\Controllers\.$nameController.::class)")."->middleware(['check.auth']);");
-        // File::append(base_path('routes/api.php'), "\n \n Route::get('" . Str::plural(strtolower($name)) . "'" . str_replace(".", "", ",[App\Http\Controllers\.$nameController.::class,'index'])")."->middleware(['check.auth']);");
-        // File::append(base_path('routes/api.php'), "\n Route::get('" . Str::plural(strtolower($name)) . "/{id}'" . str_replace(".", "", ",[App\Http\Controllers\.$nameController.::class,'show'])")."->middleware(['check.auth']);");
-        // File::append(base_path('routes/api.php'), "\n Route::post('" . Str::plural(strtolower($name)) . "'" . str_replace(".", "", ",[App\Http\Controllers\.$nameController.::class,'store'])")."->middleware(['check.auth']);");
-        // File::append(base_path('routes/api.php'), "\n Route::put('" . Str::plural(strtolower($name)) . "/{id}'" . str_replace(".", "", ",[App\Http\Controllers\.$nameController.::class,'update'])")."->middleware(['check.auth']);");
-        // File::append(base_path('routes/api.php'), "\n Route::delete('" . Str::plural(strtolower($name)) . "/{id}'" . str_replace(".", "", ",[App\Http\Controllers\.$nameController.::class,'delete'])")."->middleware(['check.auth']);");
-        Artisan::call(command: 'make:migration create_' . Str::plural(strtolower($name)) . '_table --create=' . Str::plural(strtolower($name)));
+        Artisan::call(command: 'make:migration create_' . strtolower($name) . '_table --create=' . strtolower($name));
     }
 
     protected function controller($name)

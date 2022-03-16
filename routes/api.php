@@ -46,6 +46,18 @@ use Illuminate\Support\Facades\Route;
 
  
  Route::apiResource('casas',App\Http\Controllers\CasaController::class)->middleware(['check.auth']);
+ 
+ Route::apiResource('bolos',App\Http\Controllers\BoloController::class)->middleware(['check.auth']);   
+
+  
+ 
+ Route::apiResource('grupotabelas',App\Http\Controllers\GrupoTabelaController::class)->middleware(['check.auth']);
 
  
- Route::resource('bolos',App\Http\Controllers\BoloController::class)->middleware(['check.auth']);
+ Route::apiResource('tipodocumentos',App\Http\Controllers\TipoDocumentoController::class)->middleware(['check.auth']);
+
+ 
+ Route::apiResource('tipocontratos',App\Http\Controllers\TipoContratoController::class)->middleware(['check.auth']);
+
+ 
+ Route::apiResource('tipodocumentos',App\Http\Controllers\TipoDocumentoController::class)->middleware(['check.auth']);

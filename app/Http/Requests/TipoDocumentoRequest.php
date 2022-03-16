@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CasaRequest extends FormRequest
+class TipoDocumentoRequest extends FormRequest
 {
     public function authorize()
     {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid("user_id");
             $table->string("tipo_evento");
+            $table->string("nome_tabela");
             $table->text("valor_anterior")->nullable();
             $table->text("valor_novo")->nullable();
             $table->text("url")->nullable();
@@ -37,3 +38,4 @@ return new class extends Migration
         Schema::dropIfExists('auditoria');
     }
 };
+

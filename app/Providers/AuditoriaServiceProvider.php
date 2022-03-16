@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Event;
 use App\Models\Auditoria;
 use Exception;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class AuditoriaServiceProvider extends ServiceProvider
@@ -28,6 +27,7 @@ class AuditoriaServiceProvider extends ServiceProvider
                         "user_id" => request()->user_key,
                         "tipo_evento" => explode('.', explode(':', $origem)[0])[1],
                         "valor_anterior" => json_encode($originalData),
+                        "nome_tabela" => Str::singular($tableName),
                         "valor_novo" => json_encode($newData),
                         "url" => request()->server('HTTP_HOST'),
                         "ip_andress" => request()->ip(),

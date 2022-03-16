@@ -15,6 +15,7 @@ class Auditoria extends Model
         "user_id",
         "tipo_evento",
         "valor_anterior",
+        "nome_tabela",
         "valor_novo",
         "url",
         "ip_andress",

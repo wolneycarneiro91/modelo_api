@@ -8,21 +8,19 @@ use Illuminate\Support\Facades\Http;
 
 class CheckAuth
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
+
     public function handle(Request $request, Closure $next)
-    {
+    {     
+        $route =implode('/',$request->segments())."-".$request->method();          
         $response = Http::withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => $request->bearer,
-        ])->get(config('microservices.avaliable.micro_01.url').'/api/autenticar');
+            'Authorization' => $request->bearer            
+        ])->get(config('microservices.avaliable.micro_01.url').'/api/autenticar',[
+            'route'=> $route
+        ]);
 
-        $retorno = json_decode($response->body());            
+        $retorno = json_decode($response->body());  
+        //dd($response->body());          
         if ($retorno->message == 'autenticado') {
             $request['user_key'] = $retorno->user_key;
             return $next($request);

@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('salas', function (Blueprint $table) {
+        Schema::create('tipo_documento', function (Blueprint $table) {
             $table->id();
-            $table->integer('tipo_aluno_id');
-            $table->integer('tipo_escola_id');
-            $table->integer('quantidade_alunos');
-            $table->foreign('tipo_aluno_id')->references('id')->on('tipo_de_alunos');
-            $table->foreign('tipo_escola_id')->references('id')->on('tipo_de_escolas');
-            $table->softDeletes();
+            $table->string('descricao');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('salas');
+        Schema::dropIfExists('tipodocumento');
     }
 };

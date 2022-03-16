@@ -36,7 +36,7 @@ class {{modelName}}Controller extends Controller
         } 
         catch (\Exception $e) {
             DB::rollback();
-            return response()->json('Não foi possível cadastrar', Response::HTTP_NOT_ACCEPTABLE );
+            return response()->json(["message"=>'Não foi possível cadastrar',"error"=>$e], Response::HTTP_NOT_ACCEPTABLE );
         }             
     }
     public function show($id)
@@ -63,7 +63,7 @@ class {{modelName}}Controller extends Controller
         catch (\Exception $e)
              {
              DB::rollback();
-             return response()->json('Não foi possível atualizar', Response::HTTP_NOT_ACCEPTABLE );
+             return response()->json(["message"=>'Não foi possível atualizar',"error"=>$e], Response::HTTP_NOT_ACCEPTABLE );
             }                             
     }
 
@@ -82,7 +82,7 @@ class {{modelName}}Controller extends Controller
         catch (\Exception $e)
              {
                 DB::rollback();
-                return response()->json('Não foi possível excluir', Response::HTTP_NOT_ACCEPTABLE );
+                return response()->json(["message"=>'Não foi possível excluir',"error"=>$e], Response::HTTP_NOT_ACCEPTABLE );
             }                
     }    
     
