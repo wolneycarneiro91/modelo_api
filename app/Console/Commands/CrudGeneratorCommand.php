@@ -30,7 +30,7 @@ class CrudGeneratorCommand extends Command
         $this->request($name);        
         $nameController = $name . "Controller";        
         File::append(base_path('routes/api.php'), "\n \n Route::apiResource('" . Str::plural(strtolower($name)) . "'" . str_replace(".", "", ",App\Http\Controllers\.$nameController.::class)")."->middleware(['check.auth']);");
-        Artisan::call(command: 'make:migration create_' . strtolower($name) . '_table --create=' . strtolower($name));
+       // Artisan::call(command: 'make:migration create_' . strtolower($name) . '_table --create=' . strtolower($name));
     }
 
     protected function controller($name)

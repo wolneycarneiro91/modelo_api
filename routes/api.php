@@ -61,3 +61,14 @@ use Illuminate\Support\Facades\Route;
 
  
  Route::apiResource('tipodocumentos',App\Http\Controllers\TipoDocumentoController::class)->middleware(['check.auth']);
+ 
+
+ 
+ Route::apiResource('grupotabgenerics',App\Http\Controllers\GrupoTabGenericController::class)->middleware(['check.auth']);
+
+ 
+ Route::apiResource('tabelagenericas',App\Http\Controllers\TabelaGenericaController::class)->middleware(['check.auth']);
+ 
+ Route::apiResource('tabelagenericas',App\Http\Controllers\TabelaGenericaController::class)->middleware(['check.auth']);
+ 
+ Route::apiResource('grupotabelatabelagenericas',App\Http\Controllers\GrupoTabelaTabelaGenericaController::class)->middleware(['check.auth']);
