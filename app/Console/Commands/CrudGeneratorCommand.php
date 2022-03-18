@@ -26,10 +26,11 @@ class CrudGeneratorCommand extends Command
         //$fields = $this->option('fields');
         $fields = $this->option('fields');
         $this->controller($name);
+        $this->service($name);
         $this->model($name, $fields);
-        $this->request($name);        
-        $nameController = $name . "Controller";        
-        File::append(base_path('routes/api.php'), "\n \n Route::apiResource('" . Str::plural(strtolower($name)) . "'" . str_replace(".", "", ",App\Http\Controllers\.$nameController.::class)")."->middleware(['check.auth']);");
+        $this->request($name);
+        $nameController = $name . "Controller";
+        File::append(base_path('routes/api.php'), "\n \n Route::apiResource('" . Str::plural(strtolower($name)) . "'" . str_replace(".", "", ",App\Http\Controllers\.$nameController.::class)") . "->middleware(['check.auth']);");
         Artisan::call(command: 'make:migration create_' . strtolower($name) . '_table --create=' . strtolower($name));
     }
 
@@ -44,12 +45,30 @@ class CrudGeneratorCommand extends Command
             [
                 $name,
                 strtolower(Str::plural($name)),
-                strtolower($name)
+                strtolower(Str::snake($name))
             ],
             $this->getStub('Controller')
         );
 
         file_put_contents(app_path("/Http/Controllers/{$name}Controller.php"), $controllerTemplate);
+    }
+    protected function service($name)
+    {
+        $serviceTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            $this->getStub('Service')
+        );
+
+        file_put_contents(app_path("/Services/{$name}Service.php"), $serviceTemplate);
     }
 
     protected function model($name, $fields)
