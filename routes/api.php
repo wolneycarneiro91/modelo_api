@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-
+Route::post('produto',[App\Http\Controllers\UserMsgController::class,'send_message']);
 
  
  
