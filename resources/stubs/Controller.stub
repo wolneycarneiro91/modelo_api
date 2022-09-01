@@ -9,34 +9,34 @@ use App\Services\{{modelName}}Service;
 
 class {{modelName}}Controller extends Controller
 {
-    protected ${{modelNameSingularLowerCase}}service;
-    public function __construct({{modelName}}Service ${{modelNameSingularLowerCase}}service){
-        $this->{{modelNameSingularLowerCase}}service = ${{modelNameSingularLowerCase}}service;        
+    protected ${{modelNameSingularLowerCase}}_service;
+    public function __construct({{modelName}}Service ${{modelNameSingularLowerCase}}_service){
+        $this->{{modelNameSingularLowerCase}}_service = ${{modelNameSingularLowerCase}}_service;        
     } 
 
     public function index(Request $request)
     {    
-         return $this->{{modelNameSingularLowerCase}}service->index($request);              
+         return $this->{{modelNameSingularLowerCase}}_service->index($request);              
     }
 
     public function store({{modelName}}Request $request)
     {        
-        return $this->{{modelNameSingularLowerCase}}service->store($request);   
+        return $this->{{modelNameSingularLowerCase}}_service->store($request);   
     }
 
     public function show($id)
     {
-        return $this->{{modelNameSingularLowerCase}}service->show($id);       
+        return $this->{{modelNameSingularLowerCase}}_service->show($id);       
     }
 
     public function update({{modelName}}Request $request, $id)
     { 
-        return $this->{{modelNameSingularLowerCase}}service->update($request,$id);           
+        return $this->{{modelNameSingularLowerCase}}_service->update($request,$id);           
     }
 
     public function destroy($id)
     {
-        return $this->{{modelNameSingularLowerCase}}service->destroy($id);              
+        return $this->{{modelNameSingularLowerCase}}_service->destroy($id);              
     }    
     
 }

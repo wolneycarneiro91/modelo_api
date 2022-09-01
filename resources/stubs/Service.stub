@@ -3,85 +3,33 @@
 namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
-use App\Models\{{modelName}};
+use App\Repositories\{{modelName}}Repository;
 
 class {{modelName}}Service 
-{
-    protected ${{modelNameSingularLowerCase}};
-    public function __construct({{modelName}} ${{modelNameSingularLowerCase}}){
-            $this->{{modelNameSingularLowerCase}} = ${{modelNameSingularLowerCase}};        
+{    
+    public function __construct({{modelName}}Repository ${{modelNameSingularLowerCase}}_repository){
+            $this->{{modelNameSingularLowerCase}}_repository = ${{modelNameSingularLowerCase}}_repository;        
     } 
     public function index($request)
     {    
-        if ($request->filled('limit')) {
-            if ($request->limit == '-1') {
-                $data = $this->{{modelNameSingularLowerCase}}->get();
-            }
-        } else {
-            $data = $this->{{modelNameSingularLowerCase}}->paginate(config('app.pageLimit'));
-        }                                     
-        $data = $this->{{modelNameSingularLowerCase}}->all();
-        return response()->json($data, Response::HTTP_OK );                
+        return $this->{{modelNameSingularLowerCase}}repository->index($request);                 
     }
     public function store($request)
     {        
-        $dataFrom = $request->all();
-        DB::beginTransaction();
-        try {        
-            $data = $this->{{modelNameSingularLowerCase}}->create($dataFrom);  
-            DB::commit(); 
-            return response()->json($data,Response::HTTP_CREATED ) ;
-        } 
-        catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(["message"=>'Não foi possível cadastrar',"error"=>$e], Response::HTTP_NOT_ACCEPTABLE );
-        }             
+        return $this->{{modelNameSingularLowerCase}}repository->store($request);   
     }
     public function show($id)
     {
-        $data = $this->{{modelNameSingularLowerCase}}->find($id);
-        if(!$data){
-            return response()->json(['error'=>'Dados não encontrados'],Response::HTTP_NOT_FOUND) ;
-        }
-        return response()->json($data,Response::HTTP_OK ) ;
+        return $this->{{modelNameSingularLowerCase}}repository->show($id);  
     }
     public function update($request, $id)
     { 
-        $data = $this->{{modelNameSingularLowerCase}}->find($id);  
-        if(!$data){
-            return response()->json(['error'=>'Dados não encontrados'],Response::HTTP_NOT_FOUND) ;
-        }            
-        $dataFrom = $request->all();
-        DB::beginTransaction();
-        try {          
-            $data->update($dataFrom);  
-            DB::commit(); 
-            return response()->json($data,Response::HTTP_OK ) ;    
-            }
-        catch (\Exception $e)
-             {
-             DB::rollback();
-             return response()->json(["message"=>'Não foi possível atualizar',"error"=>$e], Response::HTTP_NOT_ACCEPTABLE );
-            }                             
+        return $this->{{modelNameSingularLowerCase}}repository->update($request,$id);                              
     }
 
     public function destroy($id)
     {
-        $data = $this->{{modelNameSingularLowerCase}}->find($id);
-        if(!$data){
-            return response()->json(['error'=>'Dados não encontrados'],Response::HTTP_NOT_FOUND) ;
-        }
-         DB::beginTransaction();
-         try {  
-                $data->delete();
-                DB::commit(); 
-                return response()->json(['success'=>'Deletado com sucesso.'],Response::HTTP_OK ) ; 
-         }
-        catch (\Exception $e)
-             {
-                DB::rollback();
-                return response()->json(["message"=>'Não foi possível excluir',"error"=>$e], Response::HTTP_NOT_ACCEPTABLE );
-            }                
+        return $this->{{modelNameSingularLowerCase}}repository->destroy($id);  
     }    
     
 }
